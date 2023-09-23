@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -11,11 +13,16 @@ public class Main {
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
         int port = 6379;
+        String pong = "+PONG\r\n";
         try {
             serverSocket = new ServerSocket(port);
             serverSocket.setReuseAddress(true);
             // Wait for connection from client.
             clientSocket = serverSocket.accept();
+            var br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            if (br.readLine().equals("PING")) {
+                clientSocket.getOutputStream().write(pong.getBytes());
+            }
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         } finally {
