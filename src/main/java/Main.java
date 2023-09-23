@@ -19,7 +19,7 @@ public class Main {
             serverSocket.setReuseAddress(true);
             // Wait for connection from client.
             clientSocket = serverSocket.accept();
-            var br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+            BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             if (br.readLine().equals("PING")) {
                 clientSocket.getOutputStream().write(pong.getBytes());
             }
