@@ -19,10 +19,7 @@ public class Main {
             serverSocket.setReuseAddress(true);
             // Wait for connection from client.
             clientSocket = serverSocket.accept();
-            BufferedReader br = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-            if (br.readLine().equals("PING")) {
-                clientSocket.getOutputStream().write(pong.getBytes());
-            }
+            clientSocket.getOutputStream().write(pong.getBytes());
         } catch (IOException e) {
             System.out.println("IOException: " + e.getMessage());
         } finally {
